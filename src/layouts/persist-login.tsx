@@ -1,13 +1,23 @@
-import { useEffect } from 'react'
-import { Outlet } from 'react-router-dom'
+import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
+import useAuthenticate from "../hooks/use-authenticate";
 
 const PersistLogin = () => {
-    console.log("Persist login")
-    useEffect(() => {
-    }, [])
-  return (
-    <div><Outlet /></div>
-  )
-}
+  console.log("Inside persist login");
+  const authenticate = useAuthenticate();
 
-export default PersistLogin
+  useEffect(() => {
+    const authenticateUser = async () => {
+      await authenticate();
+    };
+
+    authenticateUser();
+  }, []);
+  return (
+    <div>
+      <Outlet />
+    </div>
+  );
+};
+
+export default PersistLogin;

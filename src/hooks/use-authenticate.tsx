@@ -3,7 +3,6 @@ import { axiosPublic } from "../api/axios";
 import endpoints from "../api/endpoints";
 import useAuth from "./use-auth";
 import { AxiosError } from "axios";
-import useAxios from "./use-axios";
 
 function useAuthenticate() {
   const { setAuth } = useAuth();
