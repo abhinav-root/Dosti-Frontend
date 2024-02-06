@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { axiosPrivate } from "../api/axios";
 import useAuth from "./use-auth";
-import useAuthenticate from "./use-authenticate";
+import useRefreshToken from "./use-refresh-token";
 
 const useAxios = () => {
   const { auth } = useAuth();
-  const authenticate = useAuthenticate();
+  const refreshToken = useRefreshToken();
 
   useEffect(() => {
     const requestInterceptor = axiosPrivate.interceptors.request.use(
@@ -24,7 +24,7 @@ const useAxios = () => {
         const prevRequest = error?.config;
         if (error?.response.status === 401 && !prevRequest.sent) {
           prevRequest.sent = true;
-          const { accessToken } = await authenticate();
+          const accessToken = await refreshToken();
           prevRequest.headers["Authorization"] = `Bearer ${accessToken}`;
           return axiosPrivate(prevRequest);
         }
@@ -36,7 +36,7 @@ const useAxios = () => {
       axiosPrivate.interceptors.response.eject(responseInterceptor);
       axiosPrivate.interceptors.request.eject(requestInterceptor);
     };
-  }, [auth, authenticate]);
+  }, [auth, refreshToken]);
 
   return axiosPrivate;
 };

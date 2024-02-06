@@ -23,7 +23,9 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import endpoints from "../../api/endpoints";
 import { isAxiosError } from "axios";
 import { axiosPublic } from "../../api/axios";
-import useAuthenticate from "../../hooks/use-authenticate";
+import useRefreshToken from "../../hooks/use-refresh-token";
+import useGetUserProfile from "../../hooks/use-get-user-profile";
+import useAuth from "../../hooks/use-auth";
 
 const schema = z.object({
   email: z.string().email().trim(),
@@ -42,8 +44,10 @@ const Login = () => {
     event.preventDefault();
   };
 
-  const authenticate = useAuthenticate();
+  const refreshToken = useRefreshToken();
+  const getUserProfile = useGetUserProfile();
   const navigate = useNavigate();
+  const { auth, setAuth } = useAuth();
   const {
     register,
     handleSubmit,
@@ -55,7 +59,9 @@ const Login = () => {
     try {
       setIsLoading(true);
       await axiosPublic.post(endpoints.LOGIN, data);
-      await authenticate();
+      const accessToken = await refreshToken();
+      const userProfile = await getUserProfile();
+      setAuth({ accessToken, ...userProfile });
       navigate("/", { replace: true });
     } catch (err) {
       if (isAxiosError(err)) {
@@ -150,6 +156,12 @@ const Login = () => {
                 />
                 <FormHelperText>{errors?.password?.message}</FormHelperText>
               </FormControl>
+              <Box textAlign={'right'}>
+                <Link component={RouterLink} to={"/forgot-password"}>
+                  Forgot Password?
+                </Link>
+              </Box>
+
               <LoadingButton
                 loading={isLoading}
                 variant="contained"
