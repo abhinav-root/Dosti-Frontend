@@ -3,31 +3,22 @@ import { axiosPublic } from "../api/axios";
 import endpoints from "../api/endpoints";
 import useAuth from "./use-auth";
 import { AxiosError } from "axios";
-import useAxios from "./use-axios";
 
-function useAuthenticate() {
+function useRefreshToken() {
   const { setAuth } = useAuth();
   const navigate = useNavigate();
 
-  const authenticate = async () => {
+  const getRefreshToken = async () => {
     try {
       console.log("Getting new access token");
-      const refreshTokenResponse = await axiosPublic.get(endpoints.REFRESH, {
+      const response = await axiosPublic.get(endpoints.REFRESH, {
         withCredentials: true,
       });
-      const accessToken = refreshTokenResponse.data?.accessToken;
+      const accessToken = response.data?.accessToken;
       console.log("accessToken", accessToken);
-
-      const userProfileResponse = await axiosPublic.get(
-        endpoints.USER_PROFILE,
-        { headers: { Authorization: `Bearer ${accessToken}` } }
-      );
-      const userProfile = userProfileResponse.data;
-      const auth = { accessToken, ...userProfile };
-      setAuth(auth);
-      return auth;
+      return accessToken;
     } catch (error: unknown) {
-      console.log("Error occured while authenticating user", error);
+      console.log("Error getting refresh token", error);
       if (error instanceof AxiosError) {
         if (
           error.response?.config?.url?.includes("refresh") &&
@@ -40,7 +31,7 @@ function useAuthenticate() {
     }
   };
 
-  return authenticate;
+  return getRefreshToken;
 }
 
-export default useAuthenticate;
+export default useRefreshToken;

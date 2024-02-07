@@ -7,6 +7,9 @@ import ProtectedRoutes from "../layouts/protected-routes";
 import Home from "../pages/home/home";
 import Login from "../pages/login/login";
 import PersistLogin from "../layouts/persist-login";
+import Profile from "../pages/profile/profile";
+import ForgotPassword from "../pages/forgot-password/forgot-passport";
+import ResetPassword from "../pages/reset-password/reset-password";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +31,14 @@ const router = createBrowserRouter([
                 path: "signup",
                 element: <Signup />,
               },
+              {
+                path: "forgot-password",
+                element: <ForgotPassword />,
+              },
+              {
+                path: "reset-password",
+                element: <ResetPassword />,
+              },
             ],
           },
           {
@@ -36,6 +47,10 @@ const router = createBrowserRouter([
               {
                 path: "",
                 element: <Home />,
+              },
+              {
+                path: "profile",
+                element: <Profile />,
               },
             ],
           },

@@ -6,5 +6,9 @@ export default {
   SEARCH_USERS: "/api/users/search",
   CHATS: "/api/chats",
   MESSAGES: "/api/messages",
-  USER_PROFILE: "/api/users/profile"
+  USER_PROFILE: "/api/users/profile",
+  READ_MESSAGES: "/api/messages/read",
+  PROFILE_IMAGE: "/api/users/profile/profileImage",
+  FORGOT_PASSWORD: "/api/auth/forgot-password",
+  RESET_PASSWORD: "/api/auth/reset-password"
 };

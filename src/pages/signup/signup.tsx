@@ -23,7 +23,7 @@ import { Link as RouterLink } from "react-router-dom";
 import useAxios from "../../hooks/use-axios";
 import endpoints from "../../api/endpoints";
 import { isAxiosError } from "axios";
-import useAuthenticate from "../../hooks/use-authenticate";
+import useRefreshToken from "../../hooks/use-refresh-token";
 
 const schema = z.object({
   firstName: z.string().min(1).max(50).trim(),
@@ -45,7 +45,7 @@ const Signup = () => {
     event.preventDefault();
   };
 
-  const authenticate = useAuthenticate();
+  const authenticate = useRefreshToken();
   const {
     register,
     handleSubmit,
