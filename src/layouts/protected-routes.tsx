@@ -3,9 +3,6 @@ import useAuth from "../hooks/use-auth";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
 import useSocket from "../hooks/use-socket";
-import { setOnlineUsers } from "../redux/features/online-users/onlineUsersSlice";
-import { useDispatch } from "react-redux";
-import { markAllChatsDelivered } from "../redux/features/chats/chatsSlice";
 import { Box } from "@mui/material";
 
 const ProtectedRoutes = () => {

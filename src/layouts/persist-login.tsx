@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { axiosPublic } from "../api/axios";
 import endpoints from "../api/endpoints";
 import useAuth from "../hooks/use-auth";
@@ -8,9 +8,8 @@ import { Box, CircularProgress } from "@mui/material";
 const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
   console.log("Inside persist login");
-  const { auth, setAuth } = useAuth();
+  const { setAuth } = useAuth();
   console.log({ isLoading });
-  const navigate = useNavigate()
 
   useEffect(() => {
 
